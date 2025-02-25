@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.global-static-ip-name: staging-ip
+  name: backend-ingress
+  namespace: staging
+spec:
+  ingressClassName: gce
+  rules:
+  - host: stage.ioinfo.shop
+    http:
+      paths:
+      - backend:
+          service:
+            name: backend
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - stage.ioinfo.shop
+    secretName: staging

@@ -1,0 +1,432 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-deployment
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prod-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: prod-app
+        tier: backend
+    spec:
+      containers:
+        - name: prod-node
+          image: vamckrish08/kubernetes:1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prod-service
+  namespace: prod
+spec:
+  selector:
+    app: prod-app
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-prod-deployment
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-prod-app
+  template:
+    metadata:
+      labels:
+        app: second-prod-app
+    spec:
+      containers:
+        - name: second-prod-node
+          image: vamckrish08/kubernetes:1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: second-prod-service
+  namespace: prod
+spec:
+  selector:
+    app: second-prod-app
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: third-prod-deployment
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: third-prod-app
+  template:
+    metadata:
+      labels:
+        app: third-prod-app
+    spec:
+      containers:
+        - name: third-prod-node
+          image: vamckrish08/kubernetes:1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: third-prod-service
+  namespace: prod
+spec:
+  selector:
+    app: third-prod-app
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fourth-prod-deployment
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fourth-prod-app
+  template:
+    metadata:
+      labels:
+        app: fourth-prod-app
+    spec:
+      containers:
+        - name: fourth-prod-node
+          image: vamckrish08/kubernetes:1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fourth-prod-service
+  namespace: prod
+spec:
+  selector:
+    app: fourth-prod-app
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080
+  type: NodePort
+---
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: prod-secret
+  namespace: prod
+type: kubernetes.io/tls
+stringData:
+  tls.key: ""
+  tls.crt: ""
+---
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fourth-secret
+  namespace: prod
+type: kubernetes.io/tls
+stringData:
+  tls.key: ""
+  tls.crt: ""
+---
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: second-prod-secret
+  namespace: prod
+type: kubernetes.io/tls
+stringData:
+  tls.key: ""
+  tls.crt: "" 
+---
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: third-prod-secret
+  namespace: prod
+type: kubernetes.io/tls
+stringData:
+  tls.key: ""
+  tls.crt: "" 
+---
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argo-tls-secret
+  namespace: argocd
+type: kubernetes.io/tls
+stringData:
+  tls.key: ""
+  tls.crt: "" 
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-issuer
+  namespace: prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: vamsi.krishna@tensure.io
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-issuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+          class: gce 
+          name: prod-ingress
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: second-letsencrypt-issuer
+  namespace: prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: vamsi.krishna@tensure.io
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-issuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+          class: gce 
+          name: second-prod-ingress
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: third-letsencrypt-issuer
+  namespace: prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: vamsi.krishna@tensure.io
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-issuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: vamsi-krishna-sandbox
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: fourth-letsencrypt-issuer
+  namespace: prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: vamsi.krishna@tensure.io
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-issuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: vamsi-krishna-sandbox
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: argo-issuer
+  namespace: argocd
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: vamsi.krishna@tensure.io
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-issuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: vamsi-krishna-sandbox
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.global-static-ip-name: prod-ip
+  name: prod-ingress
+  namespace: prod
+spec:
+  ingressClassName: gce
+  rules:
+  - host: prod.ioinfo.shop
+    http:
+      paths:
+      - backend:
+          service:
+            name: prod-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - prod.ioinfo.shop
+    secretName: prod-secret
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: second-letsencrypt-issuer
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.global-static-ip-name: second-prod
+  name: second-prod-ingress
+  namespace: prod
+spec:
+  ingressClassName: gce
+  rules:
+  - host: second-prod.ioinfo.shop
+    http:
+      paths:
+      - backend:
+          service:
+            name: second-prod-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - second-prod.ioinfo.shop
+    secretName: second-prod-secret
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: third-prod-ingress
+  namespace: prod
+  annotations:
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    # kubernetes.io/ingress.global-static-ip-name: third-ingress
+    external-dns.alpha.kubernetes.io/hostname: myapp.ioinfo.shop
+    cert-manager.io/cluster-issuer: third-letsencrypt-issuer
+spec:
+  ingressClassName: gce
+  rules:
+  - host: myapp.ioinfo.shop
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: third-prod-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - myapp.ioinfo.shop
+    secretName: third-prod-secret
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argo-ingress
+  namespace: argocd
+  annotations:
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    external-dns.alpha.kubernetes.io/hostname: argo.ioinfo.shop
+    cert-manager.io/cluster-issuer: argo-issuer
+spec:
+  ingressClassName: gce
+  rules:
+  - host: argo.ioinfo.shop
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - argo.ioinfo.shop
+    secretName: argo-tls-secret
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fourth-prod-ingress
+  namespace: prod
+  annotations:
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.global-static-ip-name: third-ingress
+    external-dns.alpha.kubernetes.io/hostname: myfourthapp.ioinfo.shop
+    cert-manager.io/cluster-issuer: fourth-letsencrypt-issuer
+spec:
+  ingressClassName: gce
+  rules:
+  - host: myfourthapp.ioinfo.shop
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fourth-prod-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - myfourthapp.ioinfo.shop
+    secretName: fourth-secret

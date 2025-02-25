@@ -1,0 +1,57 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: my-ca-issuer
+  namespace: prod
+spec:
+  selfSigned: {}
+---
+# apiVersion: cert-manager.io/v1
+# kind: ClusterIssuer
+# metadata:
+#   name: my-ca-issuer
+#   namespace: prod
+# spec:
+#   ca:
+#     secretName: my-root-ca
+# ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: my-root-ca
+  namespace: prod
+spec:
+  isCA: true
+  commonName: "My Root CA"
+  secretName: my-root-ca
+  issuerRef:
+    name: my-ca-issuer
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: order-service-cert
+  namespace: prod
+spec:
+  secretName: order-service-tls
+  issuerRef:
+    name: my-ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - "order-service.prod.svc.cluster.local"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: payment-service-cert
+  namespace: prod
+spec:
+  secretName: payment-service-tls
+  issuerRef:
+    name: my-ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - "payment-service.prod.svc.cluster.local"
+
+

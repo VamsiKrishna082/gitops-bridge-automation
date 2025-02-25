@@ -1,0 +1,27 @@
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: firstcert
+#   namespace: staging
+# spec:
+#   secretName: staging
+#   issuerRef:
+#     name: letsencrypt-issuer
+#     kind: ClusterIssuer
+#   commonName: stage.ioinfo.shop
+#   dnsNames:
+#   - stage.ioinfo.shop
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: firstcert
+  namespace: prod
+spec:
+  secretName: prod-secret
+  issuerRef:
+    name: letsencrypt-issuer
+    kind: ClusterIssuer
+  commonName: prod.ioinfo.shop
+  dnsNames:
+  - prod.ioinfo.shop

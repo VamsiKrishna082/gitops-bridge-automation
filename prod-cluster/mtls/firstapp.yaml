@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      volumes:
+        - name: order-service-certs
+          secret:
+            secretName: order-service-tls
+        - name: ca-certs
+          secret:
+            secretName: my-root-ca  # Trust Payment Service's certificate
+      serviceAccountName: gke-sa 
+      containers:
+        - name: order-service
+          image: us-central1-docker.pkg.dev/vamsi-krishna-sandbox/gke-prod/image:13
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "250m"    # 0.25 vCPU
+              memory: "512Mi" # 512MB RAM
+            limits:
+              cpu: "500m"    # 0.5 vCPU (Avoid high values like "1000" or "2")
+              memory: "1Gi"
+          volumeMounts:
+            - mountPath: "/etc/order-service"
+              name: order-service-certs
+              readOnly: true
+            - mountPath: "/etc/ca"
+              name: ca-certs
+              readOnly: true
+          env:
+            - name: SSL_CERT_FILE
+              value: "/etc/order-service/tls.crt"
+            - name: SSL_KEY_FILE
+              value: "/etc/order-service/tls.key"
+            - name: SSL_CA_FILE
+              value: "/etc/ca/ca.crt"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: prod
+spec:
+  selector:
+    app: order-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort

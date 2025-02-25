@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      volumes:
+        - name: payment-service-certs
+          secret:
+            secretName: payment-service-tls
+        - name: ca-certs
+          secret:
+            secretName: my-root-ca  # Trust Order Service's certificate
+      containers:
+        - name: payment-service
+          image: us-central1-docker.pkg.dev/vamsi-krishna-sandbox/gke-prod/image:10
+          ports:
+            - containerPort: 4000
+          volumeMounts:
+            - mountPath: "/etc/payment-service"
+              name: payment-service-certs
+              readOnly: true
+            - mountPath: "/etc/ca"
+              name: ca-certs
+              readOnly: true
+          env:
+            - name: SSL_CERT_FILE
+              value: "/etc/payment-service/tls.crt"
+            - name: SSL_KEY_FILE
+              value: "/etc/payment-service/tls.key"
+            - name: SSL_CA_FILE
+              value: "/etc/ca/ca.crt"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: prod
+spec:
+  selector:
+    app: payment-service
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 4000

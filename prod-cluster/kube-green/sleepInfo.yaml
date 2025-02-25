@@ -1,0 +1,12 @@
+apiVersion: kube-green.com/v1alpha1
+kind: SleepInfo
+metadata:
+  name: argocd-sleep-schedule
+  namespace: argocd
+spec:
+  weekdays: "1-5"
+  sleepAt: "23:15"
+  wakeUpAt: "23:17"
+  timeZone: "Asia/Kolkata"
+  suspendCronJobs: true
+

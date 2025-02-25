@@ -1,0 +1,59 @@
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mtls-prod-secret
+  namespace: prod
+type: kubernetes.io/tls
+stringData:
+  tls.key: ""
+  tls.crt: ""
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: mtls-letsencrypt-issuer
+  namespace: prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: vamsi.krishna@tensure.io
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-issuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+          class: gce 
+          name: mtls-prod-ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: mtls-letsencrypt-issuer
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.global-static-ip-name: mtls-ip
+  name: mtls-prod-ingress
+  namespace: prod
+spec:
+  ingressClassName: gce
+  rules:
+  - host: mtls.ioinfo.shop
+    http:
+      paths:
+      - backend:
+          service:
+            name: order-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - mtls.ioinfo.shop
+    secretName: mtls-prod-secret
