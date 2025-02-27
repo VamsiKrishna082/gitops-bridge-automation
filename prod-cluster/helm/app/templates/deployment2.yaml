@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment2
+  namespace: prod
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend2
+      tier: backend2
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend2
+        tier: backend2
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-node2
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        

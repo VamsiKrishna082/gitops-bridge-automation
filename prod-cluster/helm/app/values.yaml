@@ -1,0 +1,28 @@
+replicaCount: 2
+
+image:
+  repository: vamckrish08/kubernetes
+  tag: "1"
+  pullPolicy: Always
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: gce
+  host: helm.ioinfo.shop
+  externaldnshostname: helm.ioinfo.shop
+
+tls:
+  enabled: true
+  secretName: helm-prod-secret
+
+certManager:
+  email: vamsi.krishna@tensure.io
+  clusterIssuerName: helm-letsencrypt-issuer
+
+project:
+  projectName: vamsi-krishna-sandbox
