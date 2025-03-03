@@ -13,16 +13,16 @@ service:
 ingress:
   enabled: true
   className: gce
-  host: helm.ioinfo.shop
-  externaldnshostname: helm.ioinfo.shop
+  host: new-helm.ioinfo.shop
+  externaldnshostname: new-helm.ioinfo.shop
 
 tls:
   enabled: true
-  secretName: helm-prod-secret
+  secretName: new-helm-prod-secret
 
 certManager:
   email: vamsi.krishna@tensure.io
-  clusterIssuerName: helm-letsencrypt-issuer
+  clusterIssuerName: new-helm-letsencrypt-issuer
 
 project:
   projectName: vamsi-krishna-sandbox

@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-first-application
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source: 
+    helm:
+      releaseName: first-app-version1
+    path: prod-cluster/helm/app
+    repoURL: https://github.com/VamsiKrishna082/gitops-bridge-automation
+    targetRevision: main

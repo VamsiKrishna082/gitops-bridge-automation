@@ -1,12 +1,80 @@
+# # apiVersion: kube-green.com/v1alpha1
+# # kind: SleepInfo
+# # metadata:
+# #   name: prod-sleep-schedule
+# #   namespace: prod
+# # spec:
+# #   weekdays: "1-5"
+# #   sleepAt: "00:00"
+# #   wakeUpAt: "11:00"
+# #   timeZone: "Asia/Kolkata"
+# #   suspendCronJobs: true
+
+# apiVersion: kube-green.com/v1alpha1
+# kind: SleepInfo
+# metadata:
+#   name: prod-monday-wakeup
+#   namespace: prod
+# spec:
+#   weekdays: "1" 
+#   wakeUpAt: "13:18" 
+#   timeZone: "Asia/Kolkata"
+#   suspendCronJobs: true
+# ---
+# apiVersion: kube-green.com/v1alpha1
+# kind: SleepInfo
+# metadata:
+#   name: prod-work-hours
+#   namespace: prod
+# spec:
+#   weekdays: "1-4"
+#   sleepAt: "23:00"
+#   wakeUpAt: "11:00"
+#   timeZone: "Asia/Kolkata"
+#   suspendCronJobs: true
+# ---
+# apiVersion: kube-green.com/v1alpha1
+# kind: SleepInfo
+# metadata:
+#   name: prod-weekend-sleep
+#   namespace: prod
+# spec:
+#   weekdays: "5"
+#   sleepAt: "23:00"
+#   timeZone: "Asia/Kolkata"
+#   suspendCronJobs: true
+# ---
+# apiVersion: kube-green.com/v1alpha1
+# kind: SleepInfo
+# metadata:
+#   name: prod-weekend-sleep
+#   namespace: prod
+# spec:
+#   weekdays: "1"
+#   sleepAt: "13:16"
+#   timeZone: "Asia/Kolkata"
+#   suspendCronJobs: true
+
 apiVersion: kube-green.com/v1alpha1
 kind: SleepInfo
 metadata:
-  name: prod-sleep-schedule
+  name: prod-work-hours
   namespace: prod
 spec:
-  weekdays: "1-5"
-  sleepAt: "00:00"
+  weekdays: "2-6"
+  sleepAt: "23:00"
   wakeUpAt: "11:00"
   timeZone: "Asia/Kolkata"
   suspendCronJobs: true
-
+---
+apiVersion: kube-green.com/v1alpha1
+kind: SleepInfo
+metadata:
+  name: prod-weekend-continuous-sleep
+  namespace: prod
+spec:
+  weekdays: "0,1" 
+  sleepAt: "14:08"
+  wakeUpAt: "14:10"  
+  timeZone: "Asia/Kolkata"
+  suspendCronJobs: true
