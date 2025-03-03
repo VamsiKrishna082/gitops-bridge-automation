@@ -26,3 +26,6 @@ certManager:
 
 project:
   projectName: vamsi-krishna-sandbox
+
+deployment:
+  enabled: false
