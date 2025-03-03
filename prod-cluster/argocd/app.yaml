@@ -8,6 +8,13 @@ spec:
     namespace: default
     server: https://kubernetes.default.svc
   project: default
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      name: new-helm-prod-secret
+      namespace: prod
+      jsonPointers:
+        - /data
   source: 
     helm:
       releaseName: first-app-version1
