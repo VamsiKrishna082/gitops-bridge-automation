@@ -20,4 +20,4 @@ spec:
         - name: {{ .Release.Name }}-node2
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+{{- end }}
