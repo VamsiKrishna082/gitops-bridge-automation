@@ -4,8 +4,20 @@ metadata:
   name: argo-sleep-schedule
   namespace: argocd
 spec:
-  weekdays: "1-5"
-  sleepAt: "00:00"
+  weekdays: "1-2"
+  sleepAt: "11:45"
+  wakeUpAt: "00:02"
+  timeZone: "Asia/Kolkata"
+  suspendCronJobs: true
+---
+apiVersion: kube-green.com/v1alpha1
+kind: SleepInfo
+metadata:
+  name: argo-next-day-schedule
+  namespace: argocd
+spec:
+  weekdays: "3"
+  sleepAt: "00:05"
   wakeUpAt: "11:00"
   timeZone: "Asia/Kolkata"
   suspendCronJobs: true
