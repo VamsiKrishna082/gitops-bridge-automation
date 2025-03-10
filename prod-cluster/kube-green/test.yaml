@@ -1,0 +1,11 @@
+apiVersion: kube-green.com/v1alpha1
+kind: SleepInfo
+metadata:
+  name: test-sleep
+  namespace: default
+spec:
+  weekdays: "1-5"
+  sleepAt: "18:00"
+  wakeUpAt: "08:00"
+  timeZone: "Asia/Kolkata" 
+  suspendCronJobs: true

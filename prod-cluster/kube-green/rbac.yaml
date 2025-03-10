@@ -1,0 +1,27 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kube-green-role
+  namespace: kube-green
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kube-green-rolebinding
+  namespace: kube-green
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: kube-green
+roleRef:
+  kind: Role
+  name: kube-green-role
+  apiGroup: rbac.authorization.k8s.io

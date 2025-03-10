@@ -5,7 +5,20 @@ metadata:
   namespace: cert-manager
 spec:
   weekdays: "1-5"
-  sleepAt: "00:00"
-  wakeUpAt: "11:00"
+  sleepAt: "15:14"
+  wakeUpAt: "15:15"
   timeZone: "Asia/Kolkata"
   suspendCronJobs: true
+
+# ---
+# apiVersion: kube-green.com/v1alpha1
+# kind: SleepInfo
+# metadata:
+#   name: cert-next-day-schedule
+#   namespace: cert-manager
+# spec:
+#   weekdays: "3"
+#   sleepAt: "00:07"
+#   wakeUpAt: "11:00"
+#   timeZone: "Asia/Kolkata"
+#   suspendCronJobs: true
