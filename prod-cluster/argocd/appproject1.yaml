@@ -20,5 +20,14 @@ spec:
     - name: read-sync
       description: "this role can be used for reading applications"
       policies:
-        - p, proj:project-role:read-sync, applications, get, project-role/*, allow
+        - p, proj:custom-project-1:read-sync, applications, get, custom-project-1/*, allow
         # - p, proj:project-role:read-sync, applications, sync, project-role/*, allow
+
+
+# based on this generate a token and try syncing the apps , it will work. For admin user it will work.
+
+# argo proj role create-token <project-name> <role-name> - this will generate the token then 
+# then try 
+
+# argocd app list --auth-token <token-name-generated-above>
+# argocd app sync --auth-token <token-name-generated-above>
