@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: application2
+  name: application3
   namespace: argocd
 spec:
   destination:
     namespace: newns
     server: https://kubernetes.default.svc
-  project: default
+  project: custom-project-1
   source:
     path: prod-cluster/argocd/directoryofmanifests
     repoURL: https://github.com/VamsiKrishna082/gitops-bridge-automation
