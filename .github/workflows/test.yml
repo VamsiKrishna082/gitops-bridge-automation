@@ -25,7 +25,7 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           project_id: 'vamsi-krishna-sandbox'
-          workload_identity_provider: 'projects/131024917947/locations/global/workloadIdentityPools/my-pool/github/providers/my-provider'
+          workload_identity_provider: 'projects/131024917947/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
 
       # Set up Google Cloud SDK
       - name: Set up Google Cloud SDK
