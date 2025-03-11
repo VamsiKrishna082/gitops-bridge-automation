@@ -3,13 +3,11 @@ on:
   push:
     branches:
       - main
-      
+
 permissions:
   contents: read
   pages: write
-  id-token: write
-
-  workflow_dispatch:  
+  id-token: write 
 
 env:
   PIPELINE_ID: ${{ github.run_id }} - ${{ github.run_attempt }}
