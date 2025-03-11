@@ -1,0 +1,31 @@
+name: Deploy development
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:  
+
+env:
+  PIPELINE_ID: ${{ github.run_id }} - ${{ github.run_attempt }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      # Authenticate to GCP Using service account key stored in secrets
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: 'vamsi-krishna-sandbox'
+          workload_identity_provider: 'projects/131024917947/locations/global/workloadIdentityPools/my-pool/github/providers/my-provider'
+
+      # Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+
