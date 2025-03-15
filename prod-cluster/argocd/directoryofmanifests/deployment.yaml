@@ -1,19 +1,19 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: prod-deployment
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: prod-app
-#       tier: backend
-#   template:
-#     metadata:
-#       labels:
-#         app: prod-app
-#         tier: backend
-#     spec:
-#       containers:
-#         - name: prod-node
-#           image: vamckrish08/kubernetes:1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prod-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: prod-app
+        tier: backend
+    spec:
+      containers:
+        - name: prod-node
+          image: vamckrish08/kubernetes:1
