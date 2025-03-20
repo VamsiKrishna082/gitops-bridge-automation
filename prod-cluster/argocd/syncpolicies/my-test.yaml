@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: new-test-application-new
+  namespace: argocd
+spec:
+  destination:
+    namespace: new-automated-ns
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: prod-cluster/argocd/directoryofmanifests
+    repoURL: https://github.com/VamsiKrishna082/gitops-bridge-automation
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - FailOnSharedResource=false
+    - CreateNamespace=true
+    # - Replace=true
