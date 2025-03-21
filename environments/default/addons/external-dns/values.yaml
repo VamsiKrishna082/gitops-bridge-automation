@@ -1,0 +1,33 @@
+# Helm chart values
+provider: google
+
+policy: sync # "sync" will synchronize the desired state from your cluster, "upsert-only" will only create/update records, and "upsert-only" won't delete records
+
+registry: txt # Use TXT records to track records managed by external-dns
+
+serviceAccount:
+  create: true # Set to true if you want Helm to create a service account for external-dns
+  name: "external-dns" # The name of the service account to use
+
+rbac:
+  create: true # Set to true to create the necessary RBAC roles and bindings
+
+sources:
+  - ingress
+  - service
+
+logLevel: info # Set the log level (e.g., debug, info, warn, error)
+
+interval: 1m # How often external-dns will check for changes
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 94Mi
+  limits:
+    cpu: 50m
+    memory: 128Mi
+
+serviceMonitor:
+  # -- If `true`, create a `ServiceMonitor` resource to support the _Prometheus Operator_.
+  enabled: false
