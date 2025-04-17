@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gitops-bridge-application
+  description: An example of a Backstage application.
+spec:
+  type: service
+  owner: vamsi.krishna@tensure.io
+  lifecycle: experimental
