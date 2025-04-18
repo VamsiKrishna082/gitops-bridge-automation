@@ -3,6 +3,9 @@ kind: Component
 metadata:
   name: gitops-bridge-application
   description: An example of a Backstage application.
+  annotations:
+    github.com/project-slug: VamsiKrishna082/gitops-bridge-automation
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: vamsi.krishna@tensure.io
