@@ -7,9 +7,9 @@ plugins:
   - techdocs-core
   - redirects:
       redirect_maps:
-        'index.md': 'docs/sample.md'
+        'index.md': 'docs/index.md'
 
 # For sidebar navigation on https://backstage.io/, see `microsite/sidebars.js`
 nav:
   - Overview:
-      - What is Backstage?: 'docs/sample.md'
+      - What is Backstage?: 'docs/index.md'
