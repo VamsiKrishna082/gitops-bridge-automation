@@ -1,0 +1,15 @@
+site_name: 'Backstage'
+site_description: 'Main documentation for gitops bridge automation'
+repo_url: https://github.com/VamsiKrishna082/gitops-bridge-automation
+edit_uri: edit/master/docs
+
+plugins:
+  - techdocs-core
+  - redirects:
+      redirect_maps:
+        'index.md': 'docs/sample.md'
+
+# For sidebar navigation on https://backstage.io/, see `microsite/sidebars.js`
+nav:
+  - Overview:
+      - What is Backstage?: 'docs/sample.md'
