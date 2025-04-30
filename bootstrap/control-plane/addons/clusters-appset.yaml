@@ -17,9 +17,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: '{{metadata.annotations.addons_repo_url}}'
-        targetRevision: '{{metadata.annotations.addons_repo_revision}}'
-        path: environments/clusters/{{name}}
+        repoURL: 'https://github.com/VamsiKrishna082/gitops-bridge-infra'
+        targetRevision: 'main'
+        path: 'app-appsets'
         directory:
           recurse: true
           exclude: addons/*
