@@ -28,3 +28,5 @@ crds:
 
 # Configuring logging level
 logLevel: info
+
+extraObjects: []
