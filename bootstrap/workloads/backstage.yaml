@@ -18,7 +18,7 @@ spec:
           - clusters:
               values:
                 workloadChart: backstage
-                workloadChartVersion: v1.1.1
+                workloadChartVersion: v1.1.0
                 workloadChartRepository: https://github.com/VamsiKrishna082/backstage-application
               selector:
                 matchExpressions:
@@ -30,7 +30,7 @@ spec:
                 matchLabels:
                   environment: production
               values:
-                workloadChartVersion: v1.1.1
+                workloadChartVersion: v1.1.0
   template:
     metadata:
       name: '{{.values.workloadChart}}-{{.name}}'
