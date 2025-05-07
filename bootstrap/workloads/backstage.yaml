@@ -19,7 +19,7 @@ spec:
               values:
                 workloadChart: backstage
                 workloadChartVersion: 1.1.0
-                workloadChartRepository: https://github.com/VamsiKrishna082/backstage-application/tree/main/tensure-backstage
+                workloadChartRepository: https://github.com/VamsiKrishna082/backstage-application
               selector:
                 matchExpressions:
                   - key: cluster_name
@@ -49,7 +49,7 @@ spec:
         
        - repoURL: '{{.values.workloadChartRepository}}'
          targetRevision: '{{.values.workloadChartVersion}}'
-         path: ./charts/backstage
+         path: ./tensure-backstage/charts/backstage
          helm:
             releaseName: '{{.values.workloadChart}}'
             ignoreMissingValueFiles: true
