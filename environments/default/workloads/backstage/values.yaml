@@ -1,3 +1,30 @@
 cert:
   email: vamsi.krishna@tensure.io
   gcpProject: vamsi-krishna-sandbox
+
+secrets:
+  db:
+    name: backstage-db-password
+    key: password
+  sql:
+    name: backstage-db-cloudsql-ip
+    key: ip
+  loginid:
+    name: backstage-client-id
+    key: id
+  loginsecret:
+    name: backstage-client-secret
+    key: secret
+  backendauth:
+    name: backstage-backend-auth
+    key: password
+  github:
+    name: backstage-github-integration-key
+    key: password
+  
+
+ingress:
+  host: backstage1.ioinfo.shop
+  enabled: true
+  class: gce
+  allowHttp: "true"
