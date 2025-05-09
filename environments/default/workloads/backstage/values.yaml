@@ -24,7 +24,7 @@ secrets:
   
 
 ingress:
-  host: backstage1.ioinfo.shop
+  host: backstage-new.ioinfo.shop
   enabled: true
   class: gce
   allowHttp: "true"

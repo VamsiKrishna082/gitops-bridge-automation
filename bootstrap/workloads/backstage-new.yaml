@@ -1,0 +1,67 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: backstage-new-appset
+  namespace: argocd
+spec:
+  goTemplate: true
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  ignoreApplicationDifferences:
+    - jsonPointers:
+      - /spec/syncPolicy/automated
+      - /spec/source/targetRevision
+  generators:
+    - merge:
+        mergeKeys: [server]
+        generators:
+          - clusters:
+              values:
+                workloadChart: backstage
+                workloadChartVersion: v2.1.0
+                workloadChartRepository: https://github.com/VamsiKrishna082/backstage-new-application
+              selector:
+                matchExpressions:
+                  - key: cluster_name
+                    operator: NotIn
+                    values: [gitops-bridge-spoke-cluster]
+          - clusters: 
+              selector:
+                matchLabels:
+                  environment: production
+              values:
+                workloadChartVersion: v2.1.0
+  template:
+    metadata:
+      name: '{{.values.workloadChart}}-{{.name}}'
+
+    spec:
+      project: default
+      sources:
+       # Load Kustomize to get secrets first. 
+       - repoURL: '{{.metadata.annotations.addons_repo_url}}'
+         targetRevision: '{{.metadata.annotations.addons_repo_revision}}'
+         path: '{{.metadata.annotations.addons_repo_basepath}}environments/default/workloads/{{.values.workloadChart}}/'
+       # Load ref for values files
+       - repoURL: '{{.metadata.annotations.addons_repo_url}}'
+         targetRevision: '{{.metadata.annotations.addons_repo_revision}}'
+         ref: values
+        
+       - repoURL: '{{.values.workloadChartRepository}}'
+         targetRevision: '{{.values.workloadChartVersion}}'
+         path: ./charts/backstage
+         helm:
+            releaseName: '{{.values.workloadChart}}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/environments/default/workloads/{{.values.workloadChart}}/values.yaml
+              - $values/environments/{{.metadata.labels.environment}}/workloads/{{.values.workloadChart}}/values.yaml
+              - $values/environments/clusters/{{.name}}/workloads/{{.values.workloadChart}}/values.yaml
+            
+      destination:
+        namespace: '{{.values.workloadChart}}'
+        name: '{{.name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
