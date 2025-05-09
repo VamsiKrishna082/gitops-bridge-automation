@@ -33,7 +33,7 @@ spec:
                 workloadChartVersion: v2.1.0
   template:
     metadata:
-      name: '{{.values.workloadChart}}-{{.name}}'
+      name: '{{.values.workloadChart}}-{{.name}}-new'
 
     spec:
       project: default
