@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: grafana-token
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: cluster-secrets
+  data:
+    - secretKey: grafanaToken
+      remoteRef:
+        key: grafana_token
+  target:
+    template:
+      engineVersion: v2
+      data:
+        token: "{{.grafanaToken}}"
+        

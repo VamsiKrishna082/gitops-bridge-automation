@@ -21,7 +21,30 @@ secrets:
   github:
     name: backstage-github-integration-key
     key: password
-  
+  backstage_host:
+    name: backstage-host-name
+    key: hostname
+  github_client_id:
+    name: github-client-id
+    key: id
+  github_client_secret:
+    name: github-client-secret
+    key: secret
+  grafana_host:
+    name: grafana-host-name
+    key: hostname
+  grafana_token:
+    name: grafana-token
+    key: token
+  techdocs_gcs_bucket:
+    name: techdocs-gcs-bucket
+    key: name
+  argocd_host:
+    name: argocd-host-name
+    key: hostname
+  argocd_token:
+    name: argocd-token
+    key: token
 
 ingress:
   host: backstage-new.ioinfo.shop

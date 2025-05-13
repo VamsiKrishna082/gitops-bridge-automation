@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: techdocs-gcs-bucket
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: cluster-secrets
+  data:
+    - secretKey: gcsBucket
+      remoteRef:
+        key: techdocs_gcs_bucket
+  target:
+    template:
+      engineVersion: v2
+      data:
+        name: "{{.gcsBucket}}"
+        

@@ -7,3 +7,12 @@ resources:
   - backstage-github-key.yaml
   - backstage-client-id.yaml
   - backstage-client-secret.yaml
+  - argocd-host-name.yaml
+  - argocd-token.yaml
+  - backstage-host-name.yaml
+  - github-client-id.yaml
+  - github-client-secret.yaml
+  - grafana-host-name.yaml
+  - grafana-token.yaml
+  - techdocs-gcs-bucket.yaml
+  

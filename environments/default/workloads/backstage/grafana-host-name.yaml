@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: grafana-host-name
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: cluster-secrets
+  data:
+    - secretKey: grafanaHostName
+      remoteRef:
+        key: grafana_host_name
+  target:
+    template:
+      engineVersion: v2
+      data:
+        hostname: "{{.grafanaHostName}}"
+        
