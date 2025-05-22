@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: github-app-client-id
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: cluster-secrets
+  data:
+    - secretKey: githubAppClientId
+      remoteRef:
+        key: github_app_client_id
+  target:
+    template:
+      engineVersion: v2
+      data:
+        id: "{{.githubAppClientId}}"
+        

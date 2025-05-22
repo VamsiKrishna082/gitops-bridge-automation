@@ -15,4 +15,9 @@ resources:
   - grafana-host-name.yaml
   - grafana-token.yaml
   - techdocs-gcs-bucket.yaml
+  - github-app-client-id.yaml
+  - github-app-client-secret.yaml
+  - github-app-id.yaml
+  - github-app-private-key.yaml
+  - github-app-webhook-secret.yaml
   

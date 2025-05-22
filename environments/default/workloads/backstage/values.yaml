@@ -45,6 +45,21 @@ secrets:
   argocd_token:
     name: argocd-token
     key: token
+  github_app_id:
+    name: github-app-id
+    key: id
+  github_app_client_id:
+    name: github-app-client-id
+    key: id
+  github_app_client_secret:
+    name: github-app-client-secret
+    key: secret
+  github_app_private_key:
+    name: github-app-private-key
+    key: secret
+  github_app_webhook_secret:
+    name: github-app-webhook-secret
+    key: secret
 
 ingress:
   host: backstage-new.ioinfo.shop
