@@ -3,6 +3,7 @@ resource "google_storage_bucket" "this" {
   location = "us-central1"
 
   storage_class = "STANDARD"
+  project = "vamsi-krishna-sandbox"
 
   uniform_bucket_level_access = true
 
